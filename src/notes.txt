@@ -1,0 +1,52 @@
+1)install ng new bankapp-frontend
+2)cd bankapp-frontend
+3)code .
+4)run the project ng s -o
+5)clear app.component.html
+6)install libraries
+   bootstrap
+   fontawesome
+   goooglefonts
+7)create components
+  1)ng g c register
+  2)ng g c login
+  2)ng g c dashboard
+  3)ng g c transaction
+  4)ng g c page not found
+
+8)setup all the paths
+9)page designing
+
+11)Reactive forms
+..................
+    Reactive forms provide a model-driven approach to handling form inputs 
+    whose values change over time. This guide shows you how to create and update 
+    a basic form control, progress to using multiple controls in a group, 
+    validate form values, and create dynamic forms where you can add or remove controls at run time.
+
+->import reactive forms module to appmodule.ts
+    import { ReactiveFormsModule } from '@angular/forms';
+
+@NgModule({
+  imports: [
+    // other imports ...
+    ReactiveFormsModule
+  ],
+})
+export class AppModule { }
+
+*FormGroup
+*FormArray
+*FormControl
+
+formBuilder
+...........
+The FormBuilder provides syntactic sugar that shortens creating instances 
+of a FormControl, FormGroup, or FormArray. It reduces the amount of boilerplate
+ needed to build complex forms.
+
+*FormGroup
+..........
+Constructs a new FormGroup instance. Accepts a single generic argument, which is an 
+object containing all the keys and corresponding inner control types.
+

@@ -1,0 +1,10 @@
+.login-btn{
+    width: 100px;
+    height: 40px;
+    align-items: center;
+    border-radius: 2rem;
+    background-color: rgb(255, 115, 0);
+    font-size: 14px;
+    letter-spacing: 2px;
+    border: none;
+}

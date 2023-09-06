@@ -1,0 +1,77 @@
+<nav>
+    <div class="navbar bg-light">
+         <div>
+            <img src="https://qph.fs.quoracdn.net/main-qimg-22a3f0b6cea761d1b226dc78f323515d-c" alt="">
+         </div>
+         <div class="top-links">
+            <a href="">ICICI Bank Home | </a>
+            <a href="">About Us | </a>
+            <a href="">Customer care | </a>
+            <a href="">Find ATM/Branch | </a>
+            <a href="">Mobile Banking</a>
+         </div>
+    </div>
+    <div class="navbar-2 bg-light">
+        <div>
+            <button class="btn-1">Personal <i class="fa-solid fa-plus"></i></button>
+            <button>NRI</button>
+            <button>Business<i class="fa-solid fa-plus"></i></button>
+            <button>Corporate</button>
+             <button class="btn-2">Gift City</button>
+        </div>
+    </div>
+</nav>
+
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-7"></div>
+        <div class="col-md-5">
+           <div class="col-md-12">
+            <div class="row">
+                <div class="col-md-9" style="padding: 30px;">
+                    <!-- loading page -->
+                   <div *ngIf="Registersuccess" class=" text-center">
+                           <h1 class="text-light">Please wait.....
+                            <div class="spinner-border text-light" role="status">
+                                <span class="visually-hidden">Loading...</span>
+                              </div>
+                           </h1>
+                    </div>
+                    <div class="detail-portion" *ngIf="!Registersuccess">
+                        <form [formGroup]="registerForm" (ngSubmit)="register()">
+                            <div>
+                                <h5><i class="fa-solid fa-lock " style="margin-right: 10px;"></i>Login To Internet Banking</h5>
+                              
+                                <label for="" style="font-weight: 500;">Name</label><br>
+                                <input name="username" formControlName="username" class="inp" type="text"> <br>
+                                <span class="text-danger" *ngIf="this.registerForm.get('username')?.errors && this.registerForm.get('username')?.touched">*Invalid username</span><br>
+                              
+                                <label  style="font-weight: 500;" for="">Account No</label> <br>
+                                <input name="acno" formControlName="acno" class="inp" type="text"> <br>
+
+                                <span class="text-danger" *ngIf="this.registerForm.get('acno')?.errors && this.registerForm.get('acno')?.touched">*Invalid account number</span><br>
+
+                                <label  style="font-weight: 500;" for="">Password</label> <br>
+                                <input name="password" formControlName="password" class="inp" type="password"> <br>
+
+                                <span class="text-danger" *ngIf="this.registerForm.get('password')?.errors && this.registerForm.get('password')?.touched">*Invalid password</span><br>
+
+                                <button type="submit" style="margin-top: 10px;" class="login-btn">Register</button>
+                                <p class="text-center text-danger">{{RegisterError}}</p>
+                           
+                               <div class="text-center mt-0">
+                                    <p>Already registerd ?<a style="font-size: 15px;" href="">Login</a></p>
+                               </div>
+                                
+                               
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <div class="col-md-3"></div>
+            </div>
+           </div>
+        </div>
+    </div>
+</div>

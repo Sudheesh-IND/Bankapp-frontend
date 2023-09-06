@@ -1,0 +1,51 @@
+<div class="navbar-1">
+    <div>
+        <img src="https://qph.fs.quoracdn.net/main-qimg-22a3f0b6cea761d1b226dc78f323515d-c" alt="">
+
+    </div>
+    <div>
+        <button class="top-btn">Go Back</button>
+    </div>
+    
+</div>
+<div class="container">
+    <h1 class="text-center " style="margin-top: 40px;">Transaction History</h1>
+    <div class="row " style="margin-top: 40px;">
+        <div class="col-md-8 text-center">
+             <input [(ngModel)]="searchTerm" style="width: 70%;"  class="form-control" type="text" placeholder="serach here">
+        </div>
+        <div class="col-md-4 m-auto">
+           
+                <button class="m-auto" style="margin-left: 50px;" (click)="generatePdf()" >convert to pdf</button>
+
+          
+        </div>
+    </div>
+    <div class="row" style="margin-top: 40px;">
+        <div class="col-md-12">
+            <table class="table">
+                <thead>
+                  <tr class="bg-info">
+                    <th scope="col">No</th>
+                    <th scope="col">Amount</th>
+                    <th scope="col">From Account</th>
+                    <th scope="col">To Account</th>
+                    <th scope="col">type</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let trans of transactions|search:searchTerm:'type', let i=index" >
+                  
+                    <th scope="row">{{i+1}}</th>
+                    <td>{{trans.amount}}</td>
+                    <td>{{trans.fromAcno}}</td>
+                    <td>{{trans.toAcno}}</td>
+                    <td>{{trans.type}}</td>
+                  </tr>
+                 
+                </tbody>
+              </table>
+        </div>
+       
+    </div>
+</div>

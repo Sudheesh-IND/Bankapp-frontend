@@ -1,0 +1,184 @@
+<app-delete-account [deleteAcno]="acno" (onCancel)="cancelDeleteConfirm()" (onDelete)="deleteFromParent()"></app-delete-account>
+
+<div class="text-center" *ngIf="deleteSuccessMsg">
+ <h1 class="text-danger m-3">{{deleteSuccessMsg}}</h1>
+</div>
+
+<div *ngIf="!deleteConfirmStatus">
+  <nav>
+    <div class="navbar-1">
+        <div>
+            <img src="https://qph.fs.quoracdn.net/main-qimg-22a3f0b6cea761d1b226dc78f323515d-c" alt="">
+
+        </div>
+        <div>
+            <button (click)="logOut()" class="top-btn">Log Out</button>
+        </div>
+        
+    </div>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary" *ngIf="isInsideDashboard">
+        <div class="container-fluid">
+        
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav m-auto mb-2 mb-lg-0">
+                
+                    <a style="color: white;font-size: 1rem;margin: 25px;" data-bs-toggle="offcanvas" href="#offcanvasExample" (click)="getBalance()">Balance Enquiry</a>
+                    <a style="color: white;font-size: 1rem;margin: 25px;"  data-bs-toggle="modal" data-bs-target="#staticBackdrop">Fund Transfer</a>
+                    <a routerLink="/transaction" style="color: white;font-size: 1rem;margin: 25px;">Transaction History</a>
+                    <a (click)="deleteAccount()" style="color: white;font-size: 1rem;margin: 25px;">Remove Account</a>
+                    
+                
+            </ul>
+            
+          </div>
+        </div>
+      </nav>
+   
+</nav>
+<!-- modal -->
+<div *ngIf="isInsideDashboard" class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">FUND TRANSFER</h5>
+        <!-- <button style="background: none;" type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button> -->
+      </div>
+      <form  [formGroup]="fundTransferDetails" (ngSubmit)="fundTransfer()">
+        <div class="modal-body" >
+          <span class="text-danger" *ngIf="this.fundTransferDetails.get('creditAcno')?.errors && this.fundTransferDetails.get('CreditAcno')?.touched">Invalid Account</span>
+
+          <div class="form-floating mb-3">
+            <input formControlName="creditAcno" name="creditAcno" type="text" class="form-control" id="floatingInput" placeholder="credit account number">
+            <label for="floatingInput">Credit account number</label>
+          </div>
+          <span class="text-danger" *ngIf="this.fundTransferDetails.get('amount')?.errors && this.fundTransferDetails.get('amount')?.touched">Invalid Amount</span>
+
+          <div class="form-floating mb-3">
+            <input formControlName="amount" name="amount" type="text" class="form-control" id="floatingInputAcno" placeholder="Amount">
+            <label for="floatingInput">Amount</label>
+          </div>
+          <span class="text-danger" *ngIf="this.fundTransferDetails.get('password')?.errors && this.fundTransferDetails.get('password')?.touched">Invalid password</span>
+
+          <div class="form-floating">
+            <input formControlName="password" name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <label for="floatingPassword">Password</label>
+          </div>
+
+          <div class="mt-2 text-center font-bold">
+            <p class="text-success">{{transferSuccess}}</p>
+            <p class="text-danger">{{transferError}}</p>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button style="background-color: red;" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button style="background-color: green;" type="submit" class="btn btn-primary">Transfer</button>
+          <button style="background-color: rgb(0, 128, 117);" (click)="resetForm()"  class="btn btn-primary">Reset</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- offcanvas -->
+<div *ngIf="isInsideDashboard" class="offcanvas offcanvas-start" tabindex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+  <div class="offcanvas-header">
+    <button type="button" class=" text-reset" data-bs-dismiss="offcanvas" aria-label="Close">Close</button>
+  </div>
+  <div class="offcanvas-body">
+    <img src="" alt="">
+   <div>
+    <h1>Hey {{currentUser}}</h1>
+    <h2>Current Balance: <span class="text-succe">{{currentBalance}}</span></h2>
+   </div>
+   
+  </div>
+</div>
+
+<!-- //logout spinner -->
+<div *ngIf="isLoggingOut"  class=" text-center" style="margin-top: 200px;">
+  <h1 class="text-dark">Please wait....
+   <div class="spinner-border text-dark" role="status">
+       <span class="visually-hidden">Loading...</span>
+     </div>
+  </h1>
+</div>
+
+
+<div class="container container-1" *ngIf="isInsideDashboard">
+    <div class="row">
+        <div class="col-md-6 p-5 d-flex text-align-center justify-content-center">
+        
+        <img style="height: 350px;margin-right: 200px;margin-top: 80px;" src="https://clipartart.com/images/icici-logo-clipart-4.jpg" alt="">
+
+        </div>
+        <div class="col-md-6 p-5">
+  <h1 style="margin-top: 50px;">Welcome {{currentUser}}....</h1>
+  <p class="mt-4 " style="text-align: justify;">With online banking, you aren't required to visit a bank branch to complete most of your basic banking transactions. You can do all of this at your own convenience, wherever you want—at home, at work, or on the go. Online banking can be done using a browser or app. Mobile banking is online banking that is done on a phone or tablet.
+
+    Using online banking requires a computer, tablet, mobile phone, or other device, plus an Internet connection and a bank or debit card. In order to access the service, you need to register for the bank's online banking service and create a password. Once that's done, you can use the service to do your banking.</p>
+    
+    <div class="collapse" id="collapseExample">
+      
+        Banking transactions offered online vary by institution. Most banks generally offer basic services such as transfers and bill payments. Some banks also allow customers to open up new accounts and apply for credit cards through online banking portals. Other functions may include ordering checks, putting stop payments on checks, or reporting a change of address.
+        
+      </div>
+
+         <button (click)="collapse()" class="mt-3" data-bs-toggle="collapse" data-bs-target="#collapseExample">Read 
+           <span *ngIf="!isCollapse"> More</span> 
+           <span *ngIf="isCollapse">Less</span>
+           </button>
+        </div>
+    </div>
+</div>
+
+<footer class="text-center text-white" style=" background-color: rgb(104, 49, 40);" *ngIf="isInsideDashboard">
+    <!-- Grid container -->
+    <div class="container p-4 pb-0">
+      <!-- Section: Social media -->
+      <section class="mb-4">
+        <!-- Facebook -->
+        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+          ><i class="fab fa-facebook-f"></i
+        ></a>
+  
+        <!-- Twitter -->
+        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+          ><i class="fab fa-twitter"></i
+        ></a>
+  
+        <!-- Google -->
+        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+          ><i class="fab fa-google"></i
+        ></a>
+  
+        <!-- Instagram -->
+        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+          ><i class="fab fa-instagram"></i
+        ></a>
+  
+        <!-- Linkedin -->
+        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+          ><i class="fab fa-linkedin-in"></i
+        ></a>
+  
+        <!-- Github -->
+        <a class="btn btn-outline-light btn-floating m-1" href="#!" role="button"
+          ><i class="fab fa-github"></i
+        ></a>
+      </section>
+      <!-- Section: Social media -->
+    </div>
+    <!-- Grid container -->
+  
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2020 Copyright:
+      <a class="text-white" href="https://mdbootstrap.com/">MDBootstrap.com</a>
+    </div>
+    <!-- Copyright -->
+  </footer>
+</div>
