@@ -37,6 +37,11 @@ export class DashboardComponent implements OnInit{
       this.token=localStorage.getItem('token')||''
     
      }
+
+     if(!localStorage.getItem('token')){
+      alert('Please login')
+      this.route.navigateByUrl('/')
+     }
   }
 
   fundTransferDetails=this.fb.group({
